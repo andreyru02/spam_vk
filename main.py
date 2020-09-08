@@ -2,8 +2,8 @@ from time import sleep
 import requests
 
 # ПОЛУЧЕНИЕ ТОКЕНА
-username = '79254615279'
-password = 'agentbond999'
+username = input('Login: ')
+password = input('Password: ')
 
 resp = requests.get(
     f'https://oauth.vk.com/token?grant_type=password&client_id=3697615&client_secret=AlVXZFMUqyrnABp8ncuU&username={username}&password={password}').json()
@@ -48,6 +48,3 @@ def spam(group, video, token):
 
 if __name__ == '__main__':
     spam(group, video, token)
-
-# получение токена https://github.com/fgRuslan/vk-spammer/blob/master/spam.py
-# сохранение токена и авторизация по нему.
