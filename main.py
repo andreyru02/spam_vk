@@ -47,7 +47,6 @@ def spam(group, video, token):
             try:
                 if resp.json().get('error').get('error_code') == 214:   # если ошибка 214 - пропускаем
                     print(datetime.today().strftime(f'%H:%M:%S | Ошибка при отправке поста. Возможно ЧС.'))
-                    continue
             except:
                 print(datetime.today().strftime(f'%H:%M:%S | Произошла ошибка.'))
                 print(resp.json())
