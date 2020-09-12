@@ -1,3 +1,4 @@
+from datetime import datetime
 from time import sleep
 import requests
 
@@ -20,6 +21,7 @@ with open('video.txt', 'r') as v_file:
 
 def spam(group, video, token):
     count = 0
+    kol = 0
     while True:
         try:
             for g in group:
@@ -31,19 +33,24 @@ def spam(group, video, token):
                 res = resp.json().get('response').get('post_id')
                 if res == int(res):
                     print(resp.json())
-                    print(f'Пост отправлен!\n'
-                          f'Группа: {g}\n'
-                          f'Видео: {video[count]}')
-                    print(f'Отправлено постов: {count+1}')
-                    print('Пауза 1 час.')
+                    print(datetime.today().strftime(f'%H:%M:%S | Пост отправлен!\n'
+                                                    f'Группа: {g}\n'
+                                                    f'Видео: {video[count]}'))
+                    print(datetime.today().strftime(f'%H:%M:%S | Отправлено постов: {kol+1}\n'
+                                                    f'Пауза 1 час.'))
+                    kol += 1
                     sleep(3600)
             count += 1
             if count > len(video):  # если количество отправленных видео больше списка видео
                 count = 0
-        except:
-            print('Произошла ошибка.')
-            print(resp.json())
-            break
+        except AttributeError:
+            try:
+                if resp.json().get('error').get('error_code') == 214:   # если ошибка 214 - пропускаем
+                    print(datetime.today().strftime(f'%H:%M:%S | Ошибка при отправке поста. Возможно ЧС.'))
+                    continue
+            except:
+                print(datetime.today().strftime(f'%H:%M:%S | Произошла ошибка.'))
+                print(resp.json())
 
 
 if __name__ == '__main__':
