@@ -6,7 +6,7 @@ import requests
 username = input('Login: ')
 password = input('Password: ')
 
-resp = requests.get(
+resp = requests.post(
     f'https://oauth.vk.com/token?grant_type=password&client_id=3697615&client_secret=AlVXZFMUqyrnABp8ncuU&username={username}&password={password}').json()
 token = resp["access_token"]
 
