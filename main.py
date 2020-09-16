@@ -40,9 +40,9 @@ def spam(group, video, token):
                                                     f'Пауза 1 час.'))
                     kol += 1
                     sleep(3600)
-                count += 1
-                if count > len(video)-1:  # если количество отправленных видео больше списка видео
-                    count = 0
+            count += 1
+            if count > len(video)-1:  # если количество отправленных видео больше списка видео
+                count = 0
         except AttributeError:
             try:
                 if resp.json().get('error').get('error_code') == 214:   # если ошибка 214 - пропускаем
