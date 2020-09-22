@@ -1,6 +1,7 @@
 from datetime import datetime
 from time import sleep
 import requests
+import traceback
 
 # ПОЛУЧЕНИЕ ТОКЕНА
 username = input('Login: ')
@@ -29,28 +30,35 @@ def spam(group, video, token):
                                     f'?owner_id={g}'  # ID group
                                     f'&attachments={video[count]}'  # video
                                     '&from_group=0'
-                                    f'&access_token={token}&v=5.122')  # token
-                res = resp.json().get('response').get('post_id')
-                if res == int(res):
-                    print(resp.json())
+                                    f'&access_token={token}&v=5.124').json()  # token
+                if 'response' in resp:
+                    print(resp)
                     print(datetime.today().strftime(f'%H:%M:%S | Пост отправлен!\n'
                                                     f'Группа: {g}\n'
                                                     f'Видео: {video[count]}'))
-                    print(datetime.today().strftime(f'%H:%M:%S | Отправлено постов: {kol+1}\n'
+                    print(datetime.today().strftime(f'%H:%M:%S | Отправлено постов: {kol + 1}\n'
                                                     f'Пауза 1 час.'))
                     kol += 1
                     sleep(3600)
 
+                if 'error' in resp:
+                    if resp.get('error').get('error_code') == 214:
+                        print(datetime.today().strftime(f'%H:%M:%S | Ошибка при отправке поста. Возможно ЧС.\n'
+                                                        f'Группа: {g}'))
+
+                else:
+                    print(datetime.today().strftime(f'%H:%M:%S | Произошла ошибка.'))
+                    print(resp.json())
+                    print('Пауза 1 час.')
+                    sleep(3600)
+
             count += 1
-            if count > len(video)-1:  # если количество отправленных видео больше списка видео
+            if count > len(video) - 1:  # если количество отправленных видео больше списка видео
                 count = 0
-        except AttributeError:
-            try:
-                if resp.json().get('error').get('error_code') == 214:   # если ошибка 214 - пропускаем
-                    print(datetime.today().strftime(f'%H:%M:%S | Ошибка при отправке поста. Возможно ЧС.'))
-            except:
-                print(datetime.today().strftime(f'%H:%M:%S | Произошла ошибка.'))
-                print(resp.json())
+                print(count)
+        except Exception as err:
+            print(datetime.today().strftime(f'%H:%M:%S | Произошла ошибка:\n', traceback.format_exc()))
+            print(resp.json())
 
 
 if __name__ == '__main__':
