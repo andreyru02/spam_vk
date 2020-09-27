@@ -46,11 +46,11 @@ def spam(group, video, token):
                         print(datetime.today().strftime(f'%H:%M:%S | Ошибка при отправке поста. Возможно ЧС.\n'
                                                         f'Группа: {g}'))
 
-                else:
-                    print(datetime.today().strftime(f'%H:%M:%S | Произошла ошибка.'))
-                    print(resp)
-                    print('Пауза 1 час.')
-                    sleep(3600)
+                    else:
+                        print(datetime.today().strftime(f'%H:%M:%S | Произошла ошибка.'))
+                        print(resp)
+                        print('Пауза 1 час.')
+                        sleep(3600)
 
             count += 1
             if count > len(video) - 1:  # если количество отправленных видео больше списка видео
