@@ -48,7 +48,7 @@ def spam(group, video, token):
 
                 else:
                     print(datetime.today().strftime(f'%H:%M:%S | Произошла ошибка.'))
-                    print(resp.json())
+                    print(resp)
                     print('Пауза 1 час.')
                     sleep(3600)
 
@@ -58,7 +58,7 @@ def spam(group, video, token):
                 print(count)
         except Exception as err:
             print(datetime.today().strftime(f'%H:%M:%S | Произошла ошибка:\n', traceback.format_exc()))
-            print(resp.json())
+            print(resp)
 
 
 if __name__ == '__main__':
